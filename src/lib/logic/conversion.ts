@@ -1,8 +1,9 @@
 // TODO - Implement UnitValue conversion
 
 import { type Hormone, type Unit } from "@/lib/logic/units";
+import { DATA } from "@/lib/logic/values";
 
-export class HormoneConverter {
+export class HormoneInterface {
   private hormone: Hormone;
 
   constructor(hormone: Hormone) {
@@ -10,4 +11,5 @@ export class HormoneConverter {
   }
 
   _convert(from: Unit, to: Unit) {}
+  _compareToReferenceRange(value: number) {}
 }
