@@ -37,7 +37,7 @@ export function DropDown({
   contentClassName,
 }: DropDownProps) {
   return (
-    <div className={cn("inline-flex", className)}>
+    <div className={cn("inline-flex w-full md:w-auto", className)}>
       <Select
         name={name}
         value={value}
@@ -45,7 +45,7 @@ export function DropDown({
         onValueChange={(val) => onChange?.(val)}
         disabled={disabled}
       >
-        <SelectTrigger className={cn("w-[140px]", triggerClassName)}>
+        <SelectTrigger className={cn("w-full", triggerClassName)}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className={contentClassName}>
