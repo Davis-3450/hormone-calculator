@@ -2,6 +2,8 @@
 
 This is a simple hormone calculator that allows you to convert hormones between different units and check if they are within the normal range.
 
+[Hormone Calculator](https://davis-3450.github.io/hormone-calculator/)
+
 ## Features
 
 - Convert hormones between different units (nmol/L, ng/dL, ng/mL, pmol/L)
