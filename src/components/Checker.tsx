@@ -58,7 +58,7 @@ export function Checker() {
 
       <CardFooter className="justify-center">
         <p>
-          Made with ❤️ by{" "}
+          Made with 💜 by{" "}
           <a
             href="https://github.com/Davis-3450"
             className="text-purple-400 font-bold"
