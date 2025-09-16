@@ -1,39 +1,104 @@
 import { Gender } from "@/lib/logic/units";
 import { HormoneName } from "@/lib/logic/units";
+import { Unit, UnitName } from "@/lib/logic/units";
 
-// TODO: placeholder - fact check this
+export type Range = { min: number; max: number };
+
+export type UnitRange = Range & {
+  unit: UnitName;
+  factor: number; // TODO - make specific type
+};
+
+// TODO: placeholder - fact check the numbers later
+// TODO: make an interface for the data.
 export const DATA = {
   [Gender.Male]: {
     gender: Gender.Male,
-    ranges: {
-      [HormoneName.Testosterone]: [{ min: 0.5, max: 2.4 }], // nmol/L
-      [HormoneName.Estradiol]: [{ min: 100, max: 200 }], // pmol/L
-      [HormoneName.Prolactin]: [{ min: 4.8, max: 23.3 }], // ng/mL
-      [HormoneName.Progesterone]: [{ min: 4, max: 25 }], // nmol/L
+    hormones: {
+      [HormoneName.Testosterone]: {
+        min: 0.5,
+        max: 2.4,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
+      [HormoneName.Estradiol]: {
+        min: 100,
+        max: 200,
+        unit: UnitName.pmol_L,
+        factor: 1,
+      },
+      [HormoneName.Prolactin]: {
+        min: 4.8,
+        max: 23.3,
+        unit: UnitName.ng_mL,
+        factor: 1,
+      },
+      [HormoneName.Progesterone]: {
+        min: 4,
+        max: 25,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
     },
-    unit: { name: "pmol/L" },
-    factor: 1, // placeholder
   },
+
   [Gender.Undefined]: {
-    ranges: {
-      [HormoneName.Testosterone]: [{ min: 0.5, max: 2.4 }], // nmol/L
-      [HormoneName.Estradiol]: [{ min: 100, max: 200 }], // pmol/L
-      [HormoneName.Prolactin]: [{ min: 4.8, max: 23.3 }], // ng/mL
-      [HormoneName.Progesterone]: [{ min: 4, max: 25 }], // nmol/L
-    },
     gender: Gender.Undefined,
-    unit: { name: "pmol/L" },
-    factor: 1, // placeholder
-  },
-  [Gender.Female]: {
-    ranges: {
-      [HormoneName.Testosterone]: [{ min: 0.5, max: 2.4 }], // nmol/L
-      [HormoneName.Estradiol]: [{ min: 100, max: 200 }], // pmol/L
-      [HormoneName.Prolactin]: [{ min: 4.8, max: 23.3 }], // ng/mL
-      [HormoneName.Progesterone]: [{ min: 4, max: 25 }], // nmol/L
+    hormones: {
+      [HormoneName.Testosterone]: {
+        min: 0.5,
+        max: 2.4,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
+      [HormoneName.Estradiol]: {
+        min: 100,
+        max: 200,
+        unit: UnitName.pmol_L,
+        factor: 1,
+      },
+      [HormoneName.Prolactin]: {
+        min: 4.8,
+        max: 23.3,
+        unit: UnitName.ng_mL,
+        factor: 1,
+      },
+      [HormoneName.Progesterone]: {
+        min: 4,
+        max: 25,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
     },
-    unit: { name: "pmol/L" },
-    factor: 1, // placeholder
+  },
+
+  [Gender.Female]: {
     gender: Gender.Female,
+    hormones: {
+      [HormoneName.Testosterone]: {
+        min: 0.5,
+        max: 2.4,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
+      [HormoneName.Estradiol]: {
+        min: 100,
+        max: 200,
+        unit: UnitName.pmol_L,
+        factor: 1,
+      },
+      [HormoneName.Prolactin]: {
+        min: 4.8,
+        max: 23.3,
+        unit: UnitName.ng_mL,
+        factor: 1,
+      },
+      [HormoneName.Progesterone]: {
+        min: 4,
+        max: 25,
+        unit: UnitName.nmol_L,
+        factor: 1,
+      },
+    },
   },
 };
