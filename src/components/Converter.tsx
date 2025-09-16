@@ -64,8 +64,9 @@ function HormoneRow({ id }: { id: HormoneName }) {
   }, [toUnit]);
 
   return (
-    <div className="grid grid-cols-[180px_140px_120px_20px_140px_120px_90px] items-center gap-3">
-      <div className="flex flex-col text-left">
+    <div className="grid gap-3 md:grid-cols-7 md:items-center">
+      {/* Hormone with ranges */}
+      <div className="flex flex-col">
         <span className="font-medium capitalize">{id}</span>
         {rr && (
           <span className="text-xs text-muted-foreground">
