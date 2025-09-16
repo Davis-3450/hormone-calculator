@@ -24,19 +24,44 @@ function HormoneRow({
   unit: UnitName;
 }) {
   return (
-    <div className="grid grid-cols-3 gap-2">
-      <h3>{hormone}</h3>
-      <Input />
-      <DropDown
-        value={unit}
-        defaultValue={unit}
-        items={Object.values(UnitName)}
-        name="unit"
-        disabled={false}
-        placeholder={unit}
-        triggerClassName="w-[140px]"
-        contentClassName="w-[140px]"
+    <div className="grid grid-cols-[180px_140px_120px_20px_140px_120px_90px] items-center gap-3">
+      <div className="flex flex-col text-left">
+        <span className="font-medium capitalize">{id}</span>
+        {rr && (
+          <span className="text-xs text-muted-foreground">
+            Range: {rr.min}–{rr.max} {rr.unit.name}
+          </span>
+        )}
+      </div>
+      <Input
+        type="number"
+        inputMode="decimal"
+        step="any"
+        value={Number.isFinite(hormone.value.value) ? hormone.value.value : ""}
+        onChange={(e) => setVal(id, e.currentTarget.valueAsNumber)}
+        className="w-[140px] h-9"
       />
+      <UnitPicker
+        value={hormone.value.unit.name}
+        onChange={(u) => setUnit(id, u)}
+        units={unitListByHormone}
+        triggerClassName="w-[120px] h-9"
+        contentClassName="w-[160px]"
+      />
+      <div className="w-[20px] flex justify-center">
+        <ArrowRight className="text-muted-foreground" size={18} />
+      </div>
+      <Input readOnly value={converted == null ? "" : fmt(converted)} className="w-[140px] h-9" />
+      <UnitPicker
+        value={toUnit}
+        onChange={(u) => setToUnit(u)}
+        units={unitListByHormone}
+        triggerClassName="w-[120px] h-9"
+        contentClassName="w-[160px]"
+      />
+      <div className="w-[90px] flex justify-end">
+        <StatusBadge status={status} />
+      </div>
     </div>
   );
 }
