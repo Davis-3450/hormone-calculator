@@ -51,7 +51,8 @@ export function Checker() {
           ))}
         </div>
       </CardContent>
-      <CardFooter>
+
+      <CardFooter className="justify-center">
         <p>
           Made with ❤️ by{" "}
           <a
