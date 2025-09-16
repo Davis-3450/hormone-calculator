@@ -4,10 +4,12 @@ import "./index.css";
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
+import { View } from "./components/view";
 
 export function App() {
   return (
     <div className="container mx-auto p-8 text-center relative z-10">
+      <View />
       <div className="flex justify-center items-center gap-8 mb-8">
         <img
           src={logo}
