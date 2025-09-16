@@ -5,7 +5,6 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { useHormonesStore } from "@/store/hormones";
 import { HormoneName } from "@/lib/logic/units";
 import { HormoneRangeStatus } from "@/lib/logic/values";
