@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -7,7 +6,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UnitName } from "@/lib/logic/units";
-import * as React from "react";
 
 export const ALL_UNITS = Object.values(UnitName) as UnitName[];
 
@@ -19,9 +17,6 @@ export interface DropDownProps {
   name?: string;
   disabled?: boolean;
   placeholder?: string;
-  className?: string;
-  triggerClassName?: string;
-  contentClassName?: string;
 }
 
 export function DropDown({
@@ -32,12 +27,9 @@ export function DropDown({
   name,
   disabled,
   placeholder = "Select",
-  className,
-  triggerClassName,
-  contentClassName,
 }: DropDownProps) {
   return (
-    <div className={cn("inline-flex w-full md:w-auto", className)}>
+    <div className="w-full">
       <Select
         name={name}
         value={value}
@@ -45,10 +37,10 @@ export function DropDown({
         onValueChange={(val) => onChange?.(val)}
         disabled={disabled}
       >
-        <SelectTrigger className={cn("w-full", triggerClassName)}>
+        <SelectTrigger className="h-8 w-full">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className={contentClassName}>
+        <SelectContent>
           {items.map((item) => (
             <SelectItem key={item} value={item}>
               {item}
@@ -68,9 +60,6 @@ export interface UnitPickerProps {
   name?: string;
   disabled?: boolean;
   placeholder?: string;
-  className?: string;
-  triggerClassName?: string;
-  contentClassName?: string;
 }
 
 export function UnitPicker({
@@ -81,9 +70,6 @@ export function UnitPicker({
   name,
   disabled,
   placeholder = "Select",
-  className,
-  triggerClassName,
-  contentClassName,
 }: UnitPickerProps) {
   return (
     <DropDown
@@ -94,9 +80,6 @@ export function UnitPicker({
       name={name}
       disabled={disabled}
       placeholder={placeholder}
-      className={className}
-      triggerClassName={triggerClassName}
-      contentClassName={contentClassName}
     />
   );
 }
