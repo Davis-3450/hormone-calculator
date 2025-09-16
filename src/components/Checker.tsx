@@ -32,23 +32,28 @@ export function Checker() {
       <CardHeader>
         <CardTitle>Summary</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3 text-left">
-        <div className="flex gap-2 items-center">
-          <StatusBadge status={HormoneRangeStatus.normal}>
-            Normal: {normal}
-          </StatusBadge>
-          <StatusBadge status={HormoneRangeStatus.low}>Low: {low}</StatusBadge>
-          <StatusBadge status={HormoneRangeStatus.high}>
-            High: {high}
-          </StatusBadge>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          {entries.map(([id, st]) => (
-            <div key={id} className="flex items-center gap-2">
-              <span className="capitalize flex-1">{id}</span>
-              <StatusBadge status={st} />
-            </div>
-          ))}
+      <CardContent className="flex flex-col text-center">
+        <div>
+          <div className="grid place-items-center gap-2">
+            <StatusBadge status={HormoneRangeStatus.normal}>
+              Normal: {normal}
+            </StatusBadge>
+            <StatusBadge status={HormoneRangeStatus.low}>
+              Low: {low}
+            </StatusBadge>
+            <StatusBadge status={HormoneRangeStatus.high}>
+              High: {high}
+            </StatusBadge>
+          </div>
+          {/* useless for now
+          <div className="grid grid-cols-1 gap-2">
+            {entries.map(([id, st]) => (
+              <div key={id} className="flex items-center gap-2">
+                <span className="capitalize flex-1">{id}</span>
+                <StatusBadge status={st} />
+              </div>
+            ))}
+          </div> */}
         </div>
       </CardContent>
 
