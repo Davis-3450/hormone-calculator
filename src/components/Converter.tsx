@@ -74,6 +74,8 @@ function HormoneRow({ id }: { id: HormoneName }) {
           </span>
         )}
       </div>
+
+      {/* Input */}
       <Input
         type="number"
         inputMode="decimal"
@@ -82,16 +84,12 @@ function HormoneRow({ id }: { id: HormoneName }) {
         onChange={(e) => setVal(id, e.currentTarget.valueAsNumber)}
         className="w-[140px] h-9"
       />
-      <UnitPicker
-        value={hormone.value.unit.name}
-        onChange={(u) => setUnit(id, u)}
-        units={unitListByHormone}
-        triggerClassName="w-[120px] h-9"
-        contentClassName="w-[160px]"
-      />
-      <div className="w-[20px] flex justify-center">
+
+      {/* Unit picker 1 */}
         <ArrowRight className="text-muted-foreground" size={18} />
       </div>
+
+      {/* Input 2 */}
       <Input
         readOnly
         value={converted == null ? "" : fmt(converted)}
@@ -104,7 +102,9 @@ function HormoneRow({ id }: { id: HormoneName }) {
         triggerClassName="w-[120px] h-9"
         contentClassName="w-[160px]"
       />
-      <div className="w-[90px] flex justify-end">
+
+      {/* Status badge */}
+      <div className="flex justify-start md:justify-center">
         <StatusBadge status={status} />
       </div>
     </div>
