@@ -104,7 +104,7 @@ function HormoneRow({ id }: { id: HormoneName }) {
       />
 
       {/* Status badge */}
-      <div className="flex justify-start md:justify-center">
+      <div className="md:justify-center">
         <StatusBadge status={status} />
       </div>
     </div>
