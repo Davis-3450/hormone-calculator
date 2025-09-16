@@ -8,6 +8,10 @@ This is a simple hormone calculator that allows you to convert hormones between 
 - Check if hormones are within the normal range.
 - View reference ranges for hormones (Testosterone, Estradiol, Prolactin, Progesterone)
 
+## Why?
+- I wanted to learn more about hormones and how to convert them between different units.
+- There are many people who may need this and for whatever reason there aren't many tools out there.
+
 ## Technologies
 
 - React
