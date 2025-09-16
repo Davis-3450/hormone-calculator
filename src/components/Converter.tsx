@@ -75,32 +75,37 @@ function HormoneRow({ id }: { id: HormoneName }) {
         )}
       </div>
 
-      {/* Input */}
+      {/* Input 1 */}
       <Input
         type="number"
         inputMode="decimal"
         step="any"
         value={Number.isFinite(hormone.value.value) ? hormone.value.value : ""}
         onChange={(e) => setVal(id, e.currentTarget.valueAsNumber)}
-        className="w-[140px] h-9"
       />
 
       {/* Unit picker 1 */}
+      <div className="text">
+        <UnitPicker
+          value={hormone.value.unit.name}
+          onChange={(u) => setUnit(id, u)}
+          units={unitListByHormone}
+        />
+      </div>
+
+      {/* Arrow */}
+      <div className="flex justify-center">
         <ArrowRight className="text-muted-foreground" size={18} />
       </div>
 
       {/* Input 2 */}
-      <Input
-        readOnly
-        value={converted == null ? "" : fmt(converted)}
-        className="w-[140px] h-9"
-      />
+      <Input readOnly value={converted == null ? "" : fmt(converted)} />
+
+      {/* Unit picker 2 */}
       <UnitPicker
         value={toUnit}
         onChange={(u) => setToUnit(u)}
         units={unitListByHormone}
-        triggerClassName="w-[120px] h-9"
-        contentClassName="w-[160px]"
       />
 
       {/* Status badge */}
@@ -126,7 +131,7 @@ export function Calculator() {
     return (
       <div className="flex flex-col gap-2">
         <div className="text-sm font-medium">Reference Ranges</div>
-        <div className="grid grid-cols-2 gap-2 text-sm">
+        <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
           {ids.map((id) => {
             const rr = getWithRange(id).referenceRange!;
             return (
@@ -149,15 +154,15 @@ export function Calculator() {
         <CardTitle>Calculator</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <span className="text-sm text-muted-foreground">Gender:</span>
-          <DropDown
-            value={gender}
-            items={Object.values(Gender)}
-            onChange={(g) => setGender(g as Gender)}
-            triggerClassName="w-[160px]"
-            contentClassName="w-[200px]"
-          />
+          <div className="mt-1">
+            <DropDown
+              value={gender}
+              items={Object.values(Gender)}
+              onChange={(g) => setGender(g as Gender)}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-3">
