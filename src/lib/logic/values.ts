@@ -1,11 +1,13 @@
-import { Gender, type Conversion } from "@/lib/logic/units";
+import { Gender } from "@/lib/logic/units";
 import { HormoneName } from "@/lib/logic/units";
 import { UnitName } from "@/lib/logic/units";
+import { type Hormone } from "@/lib/logic/units";
+import { type Unit } from "@/lib/logic/units";
 
 export type UnitNormalRange = {
   min: number;
   max: number;
-  unit: UnitName;
+  unit: Unit;
 };
 
 export type UnitInfo = {
@@ -35,16 +37,16 @@ export const DATA: Record<Gender, Data> = {
     gender: Gender.Male,
     hormones: {
       [HormoneName.Testosterone]: {
-        normalRange: { min: 10, max: 35, unit: UnitName.nmol_L },
+        normalRange: { min: 10, max: 35, unit: { name: UnitName.nmol_L } },
       },
       [HormoneName.Estradiol]: {
-        normalRange: { min: 36.7, max: 183.6, unit: UnitName.pmol_L },
+        normalRange: { min: 36.7, max: 183.6, unit: { name: UnitName.pmol_L } },
       },
       [HormoneName.Prolactin]: {
-        normalRange: { min: 2, max: 18, unit: UnitName.ng_mL },
+        normalRange: { min: 2, max: 18, unit: { name: UnitName.ng_mL } },
       },
       [HormoneName.Progesterone]: {
-        normalRange: { min: 0, max: 0.6, unit: UnitName.nmol_L },
+        normalRange: { min: 0, max: 0.6, unit: { name: UnitName.nmol_L } },
       },
     },
   },
@@ -53,16 +55,16 @@ export const DATA: Record<Gender, Data> = {
     gender: Gender.Female,
     hormones: {
       [HormoneName.Testosterone]: {
-        normalRange: { min: 0.5, max: 2.4, unit: UnitName.nmol_L },
+        normalRange: { min: 0.5, max: 2.4, unit: { name: UnitName.nmol_L } },
       },
       [HormoneName.Estradiol]: {
-        normalRange: { min: 72, max: 1309, unit: UnitName.pmol_L },
+        normalRange: { min: 72, max: 1309, unit: { name: UnitName.pmol_L } },
       },
       [HormoneName.Prolactin]: {
-        normalRange: { min: 3, max: 30, unit: UnitName.ng_mL },
+        normalRange: { min: 3, max: 30, unit: { name: UnitName.ng_mL } },
       },
       [HormoneName.Progesterone]: {
-        normalRange: { min: 3.8, max: 50.6, unit: UnitName.nmol_L },
+        normalRange: { min: 3.8, max: 50.6, unit: { name: UnitName.nmol_L } },
       },
     },
   },
@@ -71,16 +73,16 @@ export const DATA: Record<Gender, Data> = {
     gender: Gender.NonBinary,
     hormones: {
       [HormoneName.Testosterone]: {
-        normalRange: { min: 5, max: 20, unit: UnitName.nmol_L },
+        normalRange: { min: 5, max: 20, unit: { name: UnitName.nmol_L } },
       },
       [HormoneName.Estradiol]: {
-        normalRange: { min: 150, max: 400, unit: UnitName.pmol_L },
+        normalRange: { min: 150, max: 400, unit: { name: UnitName.pmol_L } },
       },
       [HormoneName.Prolactin]: {
-        normalRange: { min: 2, max: 25, unit: UnitName.ng_mL },
+        normalRange: { min: 2, max: 25, unit: { name: UnitName.ng_mL } },
       },
       [HormoneName.Progesterone]: {
-        normalRange: { min: 0, max: 0, unit: UnitName.nmol_L },
+        normalRange: { min: 0, max: 0, unit: { name: UnitName.nmol_L } },
       },
     },
   },
@@ -121,7 +123,11 @@ export const HORMONE_FACTORS: Record<
 
 type Edge = [UnitName, number];
 
-function factorFor(hormone: HormoneName, from: UnitName, to: UnitName): number {
+export function factorFor(
+  hormone: HormoneName,
+  from: UnitName,
+  to: UnitName
+): number {
   if (from === to) return 1;
 
   const nexts = (u: UnitName): Edge[] => [
@@ -143,4 +149,86 @@ function factorFor(hormone: HormoneName, from: UnitName, to: UnitName): number {
     }
   }
   throw new Error(`No conversion path for ${hormone}: ${from} -> ${to}`);
+}
+
+export enum HormoneRangeStatus {
+  high = "high",
+  low = "low",
+  normal = "normal",
+  invalid = "invalid",
+}
+
+type UnitLike = UnitName | { name: UnitName };
+const unitName = (u?: UnitLike): UnitName | undefined =>
+  u == null ? undefined : typeof u === "object" ? u.name : u;
+
+// Accept either {min,max,unit} or [min,max] (optionally with .unit)
+type RefRangeLike = UnitNormalRange | ([number, number] & { unit?: UnitLike });
+
+function parseReferenceRange(
+  rr: unknown
+): { min: number; max: number; unit?: UnitName } | null {
+  const r: any = rr;
+  if (!r) return null;
+
+  // Case A: object with {min,max,unit}
+  if (typeof r === "object" && "min" in r && "max" in r) {
+    const min = Number((r as UnitNormalRange).min);
+    const max = Number((r as UnitNormalRange).max);
+    const u = unitName((r as UnitNormalRange).unit as any);
+    if (!Number.isFinite(min) || !Number.isFinite(max) || min > max)
+      return null;
+    return { min, max, unit: u };
+  }
+
+  // Case B: tuple-like [min,max] possibly with a .unit field
+  if (Array.isArray(r) && r.length >= 2) {
+    const min = Number(r[0]);
+    const max = Number(r[1]);
+    const u = unitName((r as any).unit);
+    if (!Number.isFinite(min) || !Number.isFinite(max) || min > max)
+      return null;
+    return { min, max, unit: u };
+  }
+
+  return null;
+}
+
+export function validateWithReferenceRange(
+  hormone: Hormone
+): HormoneRangeStatus {
+  // Parse reference range in either supported shape
+  const parsed = parseReferenceRange(
+    (hormone as any).referenceRange as RefRangeLike
+  );
+  if (!parsed) return HormoneRangeStatus.invalid;
+
+  const { min, max, unit: refUnit } = parsed;
+  if (!refUnit) return HormoneRangeStatus.invalid;
+
+  const fromUnit =
+    unitName(hormone.value?.unit as any) ??
+    unitName((hormone.value as any)?.name);
+  if (!fromUnit || typeof hormone.value?.value !== "number") {
+    return HormoneRangeStatus.invalid;
+  }
+
+  // Convert measured value → reference unit
+  let factor: number;
+  try {
+    factor = factorFor(hormone.id, fromUnit, refUnit);
+  } catch {
+    return HormoneRangeStatus.invalid; // no path
+  }
+
+  const vInRef = hormone.value.value * factor;
+  if (!Number.isFinite(vInRef)) return HormoneRangeStatus.invalid;
+
+  // Optional tiny tolerance to avoid flapping on rounding (0.1% of span)
+  const span = max - min;
+  const tol = span > 0 ? Math.max(1e-9, 0.001 * span) : 0;
+
+  if (vInRef < min - tol) return HormoneRangeStatus.low;
+  if (vInRef > max + tol) return HormoneRangeStatus.high;
+  return HormoneRangeStatus.normal;
 }
