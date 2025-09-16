@@ -21,6 +21,9 @@ This is a simple hormone calculator that allows you to convert hormones between 
 - Shadcn UI
 - Zustand
 
+## TO-DOs
+- [ ] implement dark theme
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) 💜
