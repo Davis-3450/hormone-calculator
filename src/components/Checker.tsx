@@ -56,7 +56,7 @@ export function Checker() {
         </div>
       </CardContent>
 
-      <CardFooter className="justify-center">
+      <CardFooter className="justify-center flex flex-col gap-2">
         <p>
           Made with 💜 by{" "}
           <a
@@ -64,6 +64,15 @@ export function Checker() {
             className="text-purple-400 font-bold"
           >
             Davis
+          </a>
+        </p>
+        <p>
+          Want to contribute?{" "}
+          <a
+            href="https://github.com/Davis-3450/hormone-calculator/blob/main/CONTRIBUTING.md"
+            className="text-purple-400 font-bold"
+          >
+            Click
           </a>
         </p>
       </CardFooter>
