@@ -1,23 +1,20 @@
-# bun-react-tailwind-shadcn-template
+# Hormone Calculator
 
-This repo includes ready to use instructions for shadcn/ui and tailwindcss for cursor.
+This is a simple hormone calculator that allows you to convert hormones between different units and check if they are within the normal range.
 
-To install dependencies:
+## Features
 
-```bash
-bun install
-```
+- Convert hormones between different units (nmol/L, ng/dL, ng/mL, pmol/L)
+- Check if hormones are within the normal range.
+- View reference ranges for hormones (Testosterone, Estradiol, Prolactin, Progesterone)
 
-To start a development server:
+## Technologies
 
-```bash
-bun dev
-```
+- React
+- Tailwind CSS
+- Shadcn UI
+- Zustand
 
-To run for production:
+## Contributing
 
-```bash
-bun start
-```
-
-This project was created using `bun init` in bun v1.2.18. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+See [CONTRIBUTING.md](CONTRIBUTING.md) 💜
