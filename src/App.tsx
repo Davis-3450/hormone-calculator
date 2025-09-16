@@ -1,4 +1,6 @@
 import { View } from "./components/view";
+// import "@/styles/globals.css";
+import "./index.css";
 
 export function App() {
   return (
